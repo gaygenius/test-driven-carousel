@@ -43,24 +43,44 @@ describe('Carousel', () => {
     ).toBe('Prev');
   });
 
-  it('decrements ‘slideIndex‘ when Prev is clicked', () => {
-    const wrapper = shallow(<Carousel slides={slides} />);
-    wrapper.setState({ slideIndex: 1 });
-    wrapper.find('[data-action="prev"]').simulate('click');
-    expect(wrapper.state('slideIndex')).toBe(0);
-  });
-
-  it('increments ‘slideIndex‘ when Next is clicked', () => {
-    const wrapper = shallow(<Carousel slides={slides} />);
-    wrapper.setState({ slideIndex: 1 });
-    wrapper.find('[data-action="next"]').simulate('click');
-    expect(wrapper.state('slideIndex')).toBe(2);
-  });
-
   it('renders the current slide as a CarouselSlide', () => {
     const wrapper = shallow(<Carousel slides={slides} />);
     expect(wrapper.find(CarouselSlide).props()).toEqual(slides[0]);
     wrapper.setState({ slideIndex: 1 });
     expect(wrapper.find(CarouselSlide).props()).toEqual(slides[1]);
+  });
+
+  describe('with a middle slide selected', () => {
+    it('increments ‘slideIndex‘ when Next is clicked', () => {
+      const wrapper = shallow(<Carousel slides={slides} />);
+      wrapper.setState({ slideIndex: 1 });
+      wrapper.find('[data-action="next"]').simulate('click');
+      expect(wrapper.state('slideIndex')).toBe(2);
+    });
+
+    it('decrements ‘slideIndex‘ when Prev is clicked', () => {
+      const wrapper = shallow(<Carousel slides={slides} />);
+      wrapper.setState({ slideIndex: 1 });
+      wrapper.find('[data-action="prev"]').simulate('click');
+      expect(wrapper.state('slideIndex')).toBe(0);
+    });
+  });
+
+  describe('with the first slide selected', () => {
+    it('wraps ‘slideIndex‘ to the max value when when Prev is clicked', () => {
+      const wrapper = shallow(<Carousel slides={slides} />);
+      wrapper.setState({ slideIndex: 0 });
+      wrapper.find('[data-action="prev"]').simulate('click');
+      expect(wrapper.state('slideIndex')).toBe(slides.length - 1);
+    });
+  });
+
+  describe('with the last slide selected', () => {
+    it('wraps ‘slideIndex‘ to o when when Next is clicked', () => {
+      const wrapper = shallow(<Carousel slides={slides} />);
+      wrapper.setState({ slideIndex: slides.length - 1 });
+      wrapper.find('[data-action="next"]').simulate('click');
+      expect(wrapper.state('slideIndex')).toBe(0);
+    });
   });
 });

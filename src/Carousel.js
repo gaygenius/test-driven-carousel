@@ -5,7 +5,7 @@ import CarouselSlide from './CarouselSlide';
 
 class Carousel extends React.PureComponent {
   static propTypes = {
-    slides: PropTypes.array,
+    slides: PropTypes.arrayOf(PropTypes.shape(CarouselSlide.propTypes)),
   };
   state = {
     slideIndex: 0,
@@ -13,12 +13,14 @@ class Carousel extends React.PureComponent {
   render() {
     const { slides, ...rest } = this.props;
     return (
-      <div>
+      <div {...rest}>
         <CarouselSlide {...slides[this.state.slideIndex]} />
         <CarouselButton
           data-action="prev"
           onClick={() =>
-            this.setState(({ slideIndex }) => ({ slideIndex: slideIndex - 1 }))
+            this.setState(({ slideIndex }) => ({
+              slideIndex: slideIndex === 0 ? slides.length - 1 : slideIndex - 1,
+            }))
           }
         >
           Prev
@@ -26,7 +28,9 @@ class Carousel extends React.PureComponent {
         <CarouselButton
           data-action="next"
           onClick={() =>
-            this.setState(({ slideIndex }) => ({ slideIndex: slideIndex + 1 }))
+            this.setState(({ slideIndex }) => ({
+              slideIndex: slideIndex === slides.length - 1 ? 0 : slideIndex + 1,
+            }))
           }
         >
           Next
