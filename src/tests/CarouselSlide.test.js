@@ -3,11 +3,27 @@ import { shallow, mount } from 'enzyme';
 import CarouselSlide from '../CarouselSlide';
 
 describe('Img', () => {
-  it('renders an <img> with the given src', () => {
-    const imgUrl = 'https://example.com/default.jpg';
+  const imgUrl = 'https://example.com/default.jpg';
+  const mountImg = () => {
     const Img = CarouselSlide.defaultProps.Img;
-    const mounted = mount(<Img src={imgUrl} imgHeight={500} />);
-    expect(mounted.containsMatchingElement(<img src={imgUrl} />)).toBe(true);
+    return mount(<Img src={imgUrl} imgHeight={500} />);
+  };
+
+  it('renders an <img> with the given src', () => {
+    expect(mountImg().containsMatchingElement(<img src={imgUrl} />)).toBe(true);
+  });
+
+  it('has the expected static styles', () => {
+    const mounted = mountImg();
+    expect(mounted).toHaveStyleRule('width', '100%');
+    expect(mounted).toHaveStyleRule('object-fit', 'cover');
+  });
+
+  it('uses imgHeight as the height style property', () => {
+    const mounted = mountImg();
+    expect(mounted).toHaveStyleRule('height', '500px');
+    mounted.setProps({ imgHeight: 'calc(100vh - 100px)' });
+    expect(mounted).toHaveStyleRule('height', 'calc(100vh - 100px)');
   });
 });
 
