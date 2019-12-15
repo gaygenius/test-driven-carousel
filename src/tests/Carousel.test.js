@@ -45,9 +45,15 @@ describe('Carousel', () => {
 
   it('renders the current slide as a CarouselSlide', () => {
     const wrapper = shallow(<Carousel slides={slides} />);
-    expect(wrapper.find(CarouselSlide).props()).toEqual(slides[0]);
+    expect(wrapper.find(CarouselSlide).props()).toEqual({
+      ...CarouselSlide.defaultProps,
+      ...slides[0],
+    });
     wrapper.setState({ slideIndex: 1 });
-    expect(wrapper.find(CarouselSlide).props()).toEqual(slides[1]);
+    expect(wrapper.find(CarouselSlide).props()).toEqual({
+      ...CarouselSlide.defaultProps,
+      ...slides[1],
+    });
   });
 
   describe('with a middle slide selected', () => {
