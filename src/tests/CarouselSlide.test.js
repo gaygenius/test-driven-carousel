@@ -10,6 +10,11 @@ describe('Img', () => {
     return mount(<Img src={imgUrl} imgHeight={500} />);
   };
 
+  it('renders correctly', () => {
+    const mounted = mountImg();
+    expect(mounted.find('img')).toMatchSnapshot();
+  });
+
   it('renders an <img> with the given src', () => {
     expect(mountImg().containsMatchingElement(<img src={imgUrl} />)).toBe(true);
   });
@@ -47,6 +52,15 @@ describe('CarouselSlide', () => {
   const description = 'A jaw-droppingly spectacular image';
   const buildCarouselSlide = () =>
     shallow(<CarouselSlide imgUrl={imgUrl} description={description} />);
+
+  it('renders correctly', () => {
+    const wrapper = buildCarouselSlide();
+    wrapper.setProps({
+      description: 'Description',
+      attribution: 'Attribution',
+    });
+    expect(wrapper).toMatchSnapshot();
+  });
 
   it('renders a <figure>', () => {
     const wrapper = buildCarouselSlide();
