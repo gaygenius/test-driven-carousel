@@ -6,6 +6,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "lint:js": "eslint .",
+    "lint:css": "stylelint **/*.js",
+    "lint": "npm run lint:js && npm run lint:css",
     "build": "webpack",
     "dev": "webpack-dev-server --open"
   },
@@ -20,6 +23,7 @@
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
+    "babel-plugin-styled-components": "^1.10.6",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.1",
     "eslint": "^6.7.1",
@@ -32,6 +36,10 @@
     "prettier": "^1.19.1",
     "react-dom": "^16.12.0",
     "styled-components": "^4.4.1",
+    "stylelint": "^12.0.0",
+    "stylelint-config-recommended": "^3.0.0",
+    "stylelint-config-styled-components": "^0.1.1",
+    "stylelint-processor-styled-components": "^1.9.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.9.0"
