@@ -89,4 +89,15 @@ describe('Carousel', () => {
       expect(wrapper.state('slideIndex')).toBe(0);
     });
   });
+
+  it('passes defaultImg and defaultImgHeight to the CarouselSlide', () => {
+    const defaultImg = () => 'test';
+    const defaultImgHeight = 1234;
+    const wrapper = shallow(<Carousel slides={slides} />);
+    wrapper.setProps({ defaultImg, defaultImgHeight });
+    expect(wrapper.find(CarouselSlide).prop('Img')).toBe(defaultImg);
+    expect(wrapper.find(CarouselSlide).prop('imgHeight')).toBe(
+      defaultImgHeight
+    );
+  });
 });
