@@ -6,6 +6,20 @@ export default (Component, propName, upperBoundPropName) =>
     static displayName = `AutoAdvances(${Component.displayName ||
       Component.name})`;
 
+    static propTypes = {
+      [propName]: PropTypes.number.isRequired,
+      [`${propName}Increment`]: PropTypes.func.isRequired,
+      [upperBoundPropName]: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.array,
+      ]).isRequired,
+      autoAdvanceDelay: PropTypes.number.isRequired,
+    };
+
+    static defaultProps = {
+      autoAdvanceDelay: 10e3,
+    };
+
     componentDidMount() {
       this.startTimer();
     }
@@ -40,6 +54,7 @@ export default (Component, propName, upperBoundPropName) =>
     }
 
     render() {
-      return <Component {...this.props} />;
+      const { autoAdvanceDelay: _autoAdvanceDelay, ...rest } = this.props;
+      return <Component {...rest} />;
     }
   };
