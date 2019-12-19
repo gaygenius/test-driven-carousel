@@ -40,6 +40,17 @@ describe('Carousel', () => {
       mounted.setProps({ slideIndex: 0 });
       expect(mounted.find(CoreCarousel).prop('slideIndex')).toBe(0);
     });
+
+    it('advances the slide after ‘autoAdvanceDelay’ elapses', () => {
+      const autoAdvanceDelay = 10e3;
+      jest.useFakeTimers();
+      const mounted = mount(
+        <Carousel slides={slides} autoAdvanceDelay={autoAdvanceDelay} />
+      );
+      jest.advanceTimersByTime(autoAdvanceDelay);
+      mounted.update();
+      expect(mounted.find(CoreCarousel).prop('slideIndex')).toBe(1);
+    });
   });
 
   describe('core component', () => {
