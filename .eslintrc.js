@@ -10,4 +10,7 @@ module.exports = {
       version: '16.12.0',
     },
   },
+  rules: {
+    'no-unused-vars': ['error', { varsIgnorePattern: '^_' }],
+  },
 };
