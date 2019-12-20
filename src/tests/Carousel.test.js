@@ -25,13 +25,13 @@ describe('Carousel', () => {
 
   describe('component with HOC', () => {
     it('sets slideIndex={0} on the core component', () => {
-      const wrapper = shallow(<Carousel slides={slides} />);
-      expect(wrapper.find(CoreCarousel).prop('slideIndex')).toBe(0);
+      const mounted = mount(<Carousel slides={slides} />);
+      expect(mounted.find(CoreCarousel).prop('slideIndex')).toBe(0);
     });
 
     it('passes ‘slides’ down to the core component', () => {
-      const wrapper = shallow(<Carousel slides={slides} />);
-      expect(wrapper.find(CoreCarousel).prop('slides')).toBe(slides);
+      const mounted = mount(<Carousel slides={slides} />);
+      expect(mounted.find(CoreCarousel).prop('slides')).toBe(slides);
     });
 
     it('allows ‘slideIndex’ to be controlled', () => {
